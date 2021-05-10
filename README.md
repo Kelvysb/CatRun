@@ -58,6 +58,63 @@ Programas:
 
 * **Criando um projeto**
 
+![Godot_01](./docs/Godot_01.png)
+![Godot_02](./docs/Godot_02.png)
+![Godot_03](./docs/Godot_03.png)
+![Godot_04](./docs/Godot_04.png)
+
+* **Criando um personagem**
+![Godot_05](./docs/Godot_05.png)
+![Godot_06](./docs/Godot_06.png)
+![Godot_07](./docs/Godot_07.png)
+![Godot_08](./docs/Godot_08.png)
+![Godot_09](./docs/Godot_09.png)
+![Godot_10](./docs/Godot_10.png)
+
+![Godot_11](./docs/Godot_11.png)
+![Godot_12](./docs/Godot_12.png)
+![Godot_13](./docs/Godot_13.png)
+![Godot_14](./docs/Godot_14.png)
+![Godot_15](./docs/Godot_15.png)
+![Godot_16](./docs/Godot_16.png)
+![Godot_17](./docs/Godot_17.png)
+
+* **Programando o personagem**
+
+![Godot_18](./docs/Godot_18.png)
+![Godot_19](./docs/Godot_19.png)
+![Godot_20](./docs/Godot_20.png)
+
+![Godot_21](./docs/Godot_21.png)
+![Godot_22](./docs/Godot_22.png)
+![Godot_23](./docs/Godot_23.png)
+![Godot_24](./docs/Godot_24.png)
+
+* **Criando uma cena**
+![Godot_25](./docs/Godot_25.png)
+![Godot_26](./docs/Godot_26.png)
+![Godot_27](./docs/Godot_27.png)
+![Godot_28](./docs/Godot_28.png)
+![Godot_29](./docs/Godot_29.png)
+![Godot_30](./docs/Godot_20.png)
+
+![Godot_31](./docs/Godot_31.png)
+![Godot_32](./docs/Godot_32.png)
+![Godot_33](./docs/Godot_33.png)
+![Godot_34](./docs/Godot_34.png)
+![Godot_35](./docs/Godot_35.png)
+![Godot_36](./docs/Godot_36.png)
+![Godot_37](./docs/Godot_37.png)
+![Godot_38](./docs/Godot_38.png)
+![Godot_39](./docs/Godot_39.png)
+
+* **Controlando o personagem**
+![Godot_40](./docs/Godot_40.png)
+![Godot_41](./docs/Godot_41.png)
+![Godot_42](./docs/Godot_42.png)
+![Godot_43](./docs/Godot_43.png)
+
+* **Animando o personagem**
 
 
 
