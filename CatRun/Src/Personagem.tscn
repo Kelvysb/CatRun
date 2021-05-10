@@ -1,0 +1,130 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Assets/sprites.png" type="Texture" id=1]
+[ext_resource path="res://Src/Personagem.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 25.5892, 11.4145 )
+
+[sub_resource type="Animation" id=18]
+resource_name = "Andando"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 6, 21 ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "Correndo"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 22, 35 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "Sentado"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 6, 0 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "Andando"
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "Correndo"
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "Sentado"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 1
+advance_condition = "Andando"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+switch_mode = 1
+advance_condition = "Correndo"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+switch_mode = 1
+advance_condition = "Sentado"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+switch_mode = 1
+advance_condition = "Sentado"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+switch_mode = 1
+advance_condition = "Correndo"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+switch_mode = 1
+advance_condition = "Andando"
+
+[sub_resource type="AnimationNodeStateMachine" id=15]
+states/Andando/node = SubResource( 19 )
+states/Andando/position = Vector2( 410, 27 )
+states/Correndo/node = SubResource( 20 )
+states/Correndo/position = Vector2( 653, 194 )
+states/Sentado/node = SubResource( 21 )
+states/Sentado/position = Vector2( 162, 194 )
+transitions = [ "Sentado", "Andando", SubResource( 22 ), "Andando", "Correndo", SubResource( 23 ), "Correndo", "Sentado", SubResource( 24 ), "Andando", "Sentado", SubResource( 25 ), "Sentado", "Correndo", SubResource( 26 ), "Correndo", "Andando", SubResource( 27 ) ]
+start_node = "Sentado"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
+
+[node name="Personagem" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.44545, -16.9271 )
+texture = ExtResource( 1 )
+hframes = 6
+vframes = 6
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.1968, -11.893 )
+shape = SubResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Correndo"
+anims/Andando = SubResource( 18 )
+anims/Correndo = SubResource( 17 )
+anims/Sentado = SubResource( 14 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 15 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 16 )
+parameters/conditions/Andando = false
+parameters/conditions/Correndo = false
+parameters/conditions/Sentado = false
