@@ -83,6 +83,8 @@ Programas:
 
 ![Godot_18](./docs/Godot_18.png)
 ![Godot_19](./docs/Godot_19.png)
+
+Change
 ![Godot_20](./docs/Godot_20.png)
 
 ![Godot_21](./docs/Godot_21.png)
@@ -96,7 +98,7 @@ Programas:
 ![Godot_27](./docs/Godot_27.png)
 ![Godot_28](./docs/Godot_28.png)
 ![Godot_29](./docs/Godot_29.png)
-![Godot_30](./docs/Godot_20.png)
+![Godot_30](./docs/Godot_30.png)
 
 ![Godot_31](./docs/Godot_31.png)
 ![Godot_32](./docs/Godot_32.png)
@@ -113,8 +115,53 @@ Programas:
 ![Godot_41](./docs/Godot_41.png)
 ![Godot_42](./docs/Godot_42.png)
 ![Godot_43](./docs/Godot_43.png)
+![Godot_44](./docs/Godot_44.png)
+![Godot_45](./docs/Godot_45.png)
+![Godot_46](./docs/Godot_46.png)
+![Godot_47](./docs/Godot_47.png)
 
 * **Animando o personagem**
 
+![Godot_48](./docs/Godot_48.png)
+![Godot_49](./docs/Godot_49.png)
+
+![Godot_50](./docs/Godot_50.png)
+![Godot_51](./docs/Godot_51.png)
+![Godot_52](./docs/Godot_52.png)
+![Godot_53](./docs/Godot_53.png)
+![Godot_54](./docs/Godot_54.png)
+![Godot_55](./docs/Godot_55.png)
+![Godot_56](./docs/Godot_56.png)
+![Godot_57](./docs/Godot_57.png)
+![Godot_58](./docs/Godot_58.png)
+![Godot_59](./docs/Godot_59.png)
+
+![Godot_60](./docs/Godot_60.png)
+![Godot_61](./docs/Godot_61.png)
+![Godot_62](./docs/Godot_62.png)
+![Godot_63](./docs/Godot_63.png)
+![Godot_64](./docs/Godot_64.png)
+![Godot_65](./docs/Godot_65.png)
+![Godot_66](./docs/Godot_66.png)
+![Godot_67](./docs/Godot_67.png)
+![Godot_68](./docs/Godot_68.png)
+![Godot_69](./docs/Godot_69.png)
 
 
+![Godot_70](./docs/Godot_70.png)
+![Godot_71](./docs/Godot_71.png)
+![Godot_72](./docs/Godot_72.png)
+
+
+* **Câmera**
+![Godot_73](./docs/Godot_73.png)
+![Godot_74](./docs/Godot_74.png)
+![Godot_75](./docs/Godot_75.png)a
+
+* **Itens**
+![Godot_76](./docs/Godot_76.png)
+![Godot_77](./docs/Godot_77.png)
+![Godot_78](./docs/Godot_78.png)
+![Godot_79](./docs/Godot_79.png)
+![Godot_80](./docs/Godot_80.png)
+![Godot_81](./docs/Godot_81.png)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Assets/sprites.png" type="Texture" id=1]
 [ext_resource path="res://Src/Personagem.gd" type="Script" id=2]
@@ -6,9 +6,122 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 18.5, 10 )
 
+[sub_resource type="Animation" id=2]
+resource_name = "Andando"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 10, 25 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Correndo"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 26, 39 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Parado"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 10 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Pulando"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 40, 52 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "Andando"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "Correndo"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Parado"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "Pulando"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+advance_condition = "Andando"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+advance_condition = "Correndo"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+advance_condition = "Pulando"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+advance_condition = "Pulando"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+advance_condition = "Pulando"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+advance_condition = "Parado"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+advance_condition = "Andando"
+
+[sub_resource type="AnimationNodeStateMachine" id=18]
+states/Andando/node = SubResource( 6 )
+states/Andando/position = Vector2( 490, 57 )
+states/Correndo/node = SubResource( 7 )
+states/Correndo/position = Vector2( 733, 162 )
+states/Parado/node = SubResource( 8 )
+states/Parado/position = Vector2( 214, 162 )
+states/Pulando/node = SubResource( 9 )
+states/Pulando/position = Vector2( 484, 273 )
+transitions = [ "Parado", "Andando", SubResource( 10 ), "Andando", "Correndo", SubResource( 11 ), "Parado", "Pulando", SubResource( 12 ), "Andando", "Pulando", SubResource( 13 ), "Correndo", "Pulando", SubResource( 14 ), "Pulando", "Parado", SubResource( 15 ), "Andando", "Parado", SubResource( 16 ), "Correndo", "Andando", SubResource( 17 ) ]
+start_node = "Parado"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
+
 [node name="Personagem" type="KinematicBody2D"]
 script = ExtResource( 2 )
-velocidade = Vector2( 800, 800 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.0540276, -10.2514 )
@@ -17,5 +130,27 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -0.264866, -16.2649 )
 texture = ExtResource( 1 )
-hframes = 6
-vframes = 6
+hframes = 53
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Parado"
+anims/Andando = SubResource( 2 )
+anims/Correndo = SubResource( 4 )
+anims/Parado = SubResource( 3 )
+anims/Pulando = SubResource( 5 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 18 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 19 )
+parameters/conditions/Andando = false
+parameters/conditions/Correndo = false
+parameters/conditions/Parado = false
+parameters/conditions/Pulando = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+smoothing_enabled = true
