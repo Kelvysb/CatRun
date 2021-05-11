@@ -3,9 +3,13 @@
 [ext_resource path="res://Assets/Coin.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.8345
+radius = 12.8328
 
-[node name="Moeda" type="KinematicBody2D"]
+[node name="Moeda" type="RigidBody2D" groups=[
+"Moedas",
+]]
+mode = 3
+gravity_scale = 0.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

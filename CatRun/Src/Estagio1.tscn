@@ -126,3 +126,6 @@ position = Vector2( 181.338, 340.524 )
 
 [node name="Moeda" parent="." instance=ExtResource( 3 )]
 position = Vector2( 367.527, 410.371 )
+
+[node name="Moeda2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 522.334, 453 )

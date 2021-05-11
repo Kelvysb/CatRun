@@ -9,6 +9,7 @@ export var aceleracao = 0.1
 var state_machine
 var sprite
 var movimento = Vector2.ZERO
+var moedas = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,6 +40,9 @@ func _process(delta):
 	
 	var estado = "Parado"
 	
+	if not is_on_floor():
+		estado = "Pulando"
+	
 	if abs(movimento.x) > 50 and abs(movimento.x) <= 400:
 		estado = "Andando"
 	
@@ -51,3 +55,9 @@ func _process(delta):
 			estado = "Pulando"
 			
 	state_machine.travel(estado)
+	
+	for i in get_slide_count():
+		var colisao = get_slide_collision(i)
+		if colisao.collider and "Moedas" in colisao.collider.get_groups():
+			colisao.collider.free()
+			moedas += 1
