@@ -5,7 +5,7 @@
 
 * **Godot Engine**
     Programa que usaremos para desenvolver nosso jogo, o Godot, que é um "Game engine" ou motor de jogo de código aberto, um programa que simplifica e abstrai o desenvolvimento de jogos.
-    O Godot não precisa ser instalado, é só baixar, extrair e executar o programa (Ex. Godot_v3.3-stable_win64.exe), utilizaremos a versão mais 3.3, que é a mais recente.    
+    O Godot não precisa ser instalado, é só baixar, extrair e executar o programa (Ex. Godot_v3.3-stable_win64.exe), utilizaremos a versão mais 3.3, que é a mais recente.
 
     Baixe a versão mais recente clicando aqui: [Godot](https://downloads.tuxfamily.org/godotengine/3.3/Godot_v3.3-stable_win64.exe.zip).
 
@@ -165,8 +165,8 @@ Change
 ![Godot_79](./docs/Godot_79.png)
 ![Godot_80](./docs/Godot_80.png)
 ![Godot_81](./docs/Godot_81.png)
-![Godot_82](./docs/Godot_81.png)
-![Godot_83](./docs/Godot_81.png)
-![Godot_84](./docs/Godot_81.png)
-![Godot_85](./docs/Godot_81.png)
-![Godot_86](./docs/Godot_81.png)
+![Godot_82](./docs/Godot_82.png)
+![Godot_83](./docs/Godot_83.png)
+![Godot_84](./docs/Godot_84.png)
+![Godot_85](./docs/Godot_85.png)
+![Godot_86](./docs/Godot_86.png)
