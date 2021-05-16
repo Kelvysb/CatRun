@@ -14,7 +14,7 @@
 * **Sprites**
     Sprites são a arte que utilizaremos em nosso jogo, são desenhos do personagem em varias posições, desenhos do ambiente, etc.
 
-    Os sprites que utilizaremos estão aqui: [Sprites](/docs/assets.zip).
+    Os sprites que utilizaremos estão aqui: [Sprites](https://raw.githubusercontent.com/Kelvysb/CatRun/main/docs/Assets.zip).
 
 * **Noções básicas de desenvolvimento**
     Para a parte logica do nosso jogo utilizaremos a linguagem de programação GDScript, linguagem baseada em Python, sendo assim noções básicas de desenvolvimento em Python são essenciais para o workshop, para  os iniciantes na área de desenvolvimento recomendo assistir alguns tutoriais básicos sobre Python.
