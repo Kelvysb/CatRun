@@ -56,55 +56,56 @@ Programas:
 
 ### **Criando um projeto**
 
+* No gestor de projetos do Godot podemos escolher um projeto existente ou criar um novo clicando em 'Novo Projeto'(1), podemos então escolher o nome(3) de nosso projeto e a pasta onde o guardaremos(2), com o botão 'Criar Pasta' (4) será criada uma pasta vazia com o nome de nosso projeto. finalmente podemos clicar em 'Criar e Editar' (5).
+
+
+
 ![Godot_01](./docs/Godot_01.png)
-No gestor de projetos do Godot podemos escolher um projeto existente ou criar um novo clicando em 'Novo Projeto'(1), podemos então escolher o nome(3) de nosso projeto e a pasta onde o guardaremos(2), com o botão 'Criar Pasta' (4) será criada uma pasta vazia com o nome de nosso projeto. finalmente podemos clicar em 'Criar e Editar' (5).
+* Na tela principal do Godot podemos identificar as partes mais importantes que utilizaremos: 
+    * 1 - O Modo, nele podemos escolher como visualizaremos a nossa cena, em 3D, em 2D ou visualizar nossos scripts.
+    * 2 - O Viewport, ele e nosso espaço de trabalho aonde montaremos nossas cenas e scripts.
+    * 3 - Visualizador de cena, aqui podemos ver os elementos que compõe nossa cena, adicionar novos nós, remover nós, reordenar, etc.
+    * 4 - Sistema de arquivos, aqui visualizamos onde estão guardados os arquivos de nosso projeto, por aqui podemos adicionar novas cenas e atores, bem como usar os assets (Imagens, sons, etc.).
+    * 5 - Inspetor, aqui podemos alterar as propriedades dos nós que selecionamos visualizador de cenas.
+    * 6 - Controle de jogo, aqui podemos testar nosso jogo.
 ![Godot_02](./docs/Godot_02.png)
-Na tela principal do Godot podemos identificar as partes mais importantes que utilizaremos: 
-* 1 - O Modo, nele podemos escolher como visualizaremos a nossa cena, em 3D, em 2D ou visualizar nossos scripts.
-* 2 - O Viewport, ele e nosso espaço de trabalho aonde montaremos nossas cenas e scripts.
-* 3 - Visualizador de cena, aqui podemos ver os elementos que compõe nossa cena, adicionar novos nós, remover nós, reordenar, etc.
-* 4 - Sistema de arquivos, aqui visualizamos onde estão guardados os arquivos de nosso projeto, por aqui podemos adicionar novas cenas e atores, bem como usar os assets (Imagens, sons, etc.).
-* 5 - Inspetor, aqui podemos alterar as propriedades dos nós que selecionamos visualizador de cenas.
-* 6 - Controle de jogo, aqui podemos testar nosso jogo.
+* Primeiramente vamos copiar para a pasta e nosso projeto os assets, podemos fazer isso no próprio explorador de arquivos do windows o Godot vai identificar a pasta nova e vai importar para o projeto os assets.
 ![Godot_03](./docs/Godot_03.png)
-Primeiramente vamos copiar para a pasta e nosso projeto os assets, podemos fazer isso no próprio explorador de arquivos do windows o Godot vai identificar a pasta nova e vai importar para o projeto os assets.
+* E por fim vamos criar uma pasta chamada 'src' (source) on guardaremos nossas cenas, atores e scripts.
 ![Godot_04](./docs/Godot_04.png)
-E por fim vamos criar uma pasta chamada 'src' (source) on guardaremos nossas cenas, atores e scripts.
 
 ### **Criando um personagem**
+* Para criar nosso personagem vamos ate o visualizador de cenas, e clicaremos em Outro nó, na janela que aparecerá podemos procurar por 'KinematicBody2D', essa será a base para nosso personagem (ator).
 ![Godot_05](./docs/Godot_05.png)
-Para criar nosso personagem vamos ate o visualizador de cenas, e clicaremos em Outro nó, na janela que aparecerá podemos procurar por 'KinematicBody2D', essa será a base para nosso personagem (ator).
+* Agora podemos salvar nosso personagem com 'CTRL+S' para isso escolhemos como pasta de destino a pasta 'src' que criamos a pouco.
 ![Godot_06](./docs/Godot_06.png)
 ![Godot_07](./docs/Godot_07.png)
-Agora podemos salvar nosso personagem com 'CTRL+S' para isso escolhemos como pasta de destino a pasta 'src' que criamos a pouco.
-![Godot_08](./docs/Godot_08.png)
-No visualizador de cenas podemos renomear nosso ator de 'KinematicBody2D' para 'Personagem' para facilitar nossa visualização.
+* No visualizador de cenas podemos renomear nosso ator de 'KinematicBody2D' para 'Personagem' para facilitar nossa visualização.
 Com o nó do personagem selecionado podemos clicar no botão '+' para adicionar um novo sub-nó ao nosso ator, procuraremos por 'CollisionShape2D', que será responsável a dar uma forma física ao nosso personagem.
+![Godot_08](./docs/Godot_08.png)
+* Com o 'CollisionShape2D' selecionado podemos ir ao 'inspetor' do outro lado da tela, e selecionar uma forma para nosso 'CollisionShape2D', no caso escolheremos um retângulo.
 ![Godot_09](./docs/Godot_09.png)
-Com o 'CollisionShape2D' selecionado podemos ir ao 'inspetor' do outro lado da tela, e selecionar uma forma para nosso 'CollisionShape2D', no caso escolheremos um retângulo.
+* Agora com o nó do personagem selecionado clicaremos mais uma vez no botão '+' para adicionar um nó chamado 'Sprite' este é responsável por dar uma representação gráfica ao nosso ator.
 ![Godot_10](./docs/Godot_10.png)
-Agora com o nó do personagem selecionado clicaremos mais uma vez no botão '+' para adicionar um nó chamado 'Sprite' este é responsável por dar uma representação gráfica ao nosso ator.
+* com o 'Sprite' selecionado podemos ir a nossa pasta d3e assets e arrastar o arquivo chamado 'sprites.png' até o inspetor no campo 'Texture', com isso daremos esta textura ao nosso ator.
 ![Godot_11](./docs/Godot_11.png)
-com o 'Sprite' selecionado podemos ir a nossa pasta d3e assets e arrastar o arquivo chamado 'sprites.png' até o inspetor no campo 'Texture', com isso daremos esta textura ao nosso ator.
+* Porem esta textura contem toda a animação de nosso personagem, então temos que dizer no inspetor que esta imagem e uma composição, parta isso iremos ate a aba 'Animation' e mudaremos o valor ede 'HFrames' para 53, indicando que nosso arquivo de sprites e composto por 53 imagens dispostas na horizontal.
 ![Godot_12](./docs/Godot_12.png)
 ![Godot_13](./docs/Godot_13.png)
-Porem esta textura contem toda a animação de nosso personagem, então temos que dizer no inspetor que esta impagem e uma copmposição, parta isso iremos ate a aba 'Animation' e mudaremos o valor ede 'HFrames' para 53, indicando que nosso arquivo de sprites e composto por 53 imagens dispostas na horizontal.
-
+* Agora selecionando o nó 'CollisionShape2D' podemos visualizar o formato de do retângulo de colisão que dará ao nosso ator a sua forma física, podemos redimensiona-lo ate ele ficar um pouco menor que a imagem do sprite.
 ![Godot_14](./docs/Godot_14.png)
 ![Godot_15](./docs/Godot_15.png)
-Agora selecionando o nó 'CollisionShape2D' podemos visualizar o formato de do retanguilo de colisão que dará ao nosso ator a sua forma fisica, podemos redimensiona-lo ate ele ficar um pouco menor que a imagem do sprite.
+* Agora por fim podemos posicionar tanto o 'Sprite' quanto o 'Collisionshape2D' para que ambos fiquem imediatamente acima da linha vermelha (x) do 'viewport'.
 ![Godot_16](./docs/Godot_16.png)
-Agora por fim podemos posicionar tanto o 'Sprite' quanto o 'Collisionshape2D' para que ambos fiquem imediatamente acima da linha vermelha (x) do 'viewport'.
 
 * **Programando o personagem**
 
+* Com nosso personagem selecionado podemos clicar no botão de adicionar script (2), e com isso criar um script relacionado a ele.
 ![Godot_18](./docs/Godot_18.png)
-Copm nosso personagem selecionado podemos clicar no botão de adicionar script (2), e com isso criar um script relacionado a ele.
+* Com isso podemos selecionar o modo script(1) para visualizar nosso código, inicialmente ele estará vazio apenas com uma função '_ready()', e mais uma função comentada '_process(delta)' que des-comentaremos e utilizaremos logo em seguida.
 ![Godot_19](./docs/Godot_19.png)
-Com isso podemos selecionar o modo script(1) para visualizar nosso código, inicialmente ele estará vazio apenas com uma função '_ready()', e mais uma função comentada '_process(delta)' que des-comentaremos e utilizaremos logo em seguida.
 
-![Godot_20](./docs/Godot_20.png)
-Agfora podemos adicionar nosso promeiro codigo, que será responsavel por adicionar gravidade ao nosso ator.
+* Agora podemos adicionar nosso proveiro código, que será responsável por adicionar gravidade ao nosso ator.
 
 ```python
 extends KinematicBody2D
@@ -128,35 +129,49 @@ A variável 'gravidade'(1) guardará o valor da força que a gravidade terá sob
 já a variável 'movimento' (2) guardara a direção e força do movimento.
 Na função '_process(delta)' incluiremos o acumulo de velocidade no eixo 'y' relacionado a gravidade, sempre multiplicando pelo parâmetro 'delta' que é a diferença de tempo entre os frames isso fará com que o movimento seja constante independente da velocidade do computador que o jogo estiver sendo executado.
 Por fim chamaremos a função 'move_and_slide(movimento, Vector2.UP)', que é responsável por executar o movimento, o primeiro parâmetro e o movimento em si, e o segundo e para indicar ao Godot que a direção que consideramos para cima é 'UP' ou seja eixo 'y' para cima.
+![Godot_20](./docs/Godot_20.png)
 
 
+* Podemos então testar nosso jogo e veremos um gato caindo no canto da tela.
+(ao clicar em 'Play' pela primeira vez o Godot perguntara qual a cena principal, basta selecionar o arquivo de nosso Personagem (Personagem.tscn))
 ![Godot_21](./docs/Godot_21.png)
 ![Godot_22](./docs/Godot_22.png)
-Podemos então testar nosso jogo e veremos um gato caindo no canto da tela.
-(ao clicar em play pela promeira vez o Godot perguntara qual a cenma principal, basta selecionar o arquivo de nosso Personagem (Personagem.tscn))
 
 
 ### **Criando uma cena**
+* Agora precisamos criar uma cena para que nosso ator possa interagir.
+Primeiro vamos no explorador de arquivos e vamos clicar com o botão direito na pasta 'src', e logo em seguida em 'Nova Cena', colocaremos o nome de 'Estagio1', em seguida no visualizador de cena escolheremos 'Cena 2D'
 ![Godot_25](./docs/Godot_25.png)
 ![Godot_26](./docs/Godot_26.png)
-Agora precisamos criar uma cena para que nosso ator possa interagir.
-Primeiro vamos no explorador de arquivos e vamos clicar com o botão direito na pasta 'src', e logo em seguida em 'Nova Cena', colocaremos o nome de 'Estagio1', em seguida no visualizador de cena escolheremos 'Cena 2D'
 
+* Depois de salvar nossa cena podemos clicar com o botão direto sobre ela no explorador de arquivos, para defini-la como cena principal, assis nosso jogo se iniciará por ela. 
 ![Godot_27](./docs/Godot_27.png)
-Depois de salvar nossa cena podemos clicar com o botão direto sobre ela no explorador de arquivos, para defini-la como cena principal, assis nosso jogo se iniciará por ela. 
+* Agora vamos adicionar algo nesta cena, com o 'Node2D' selecionado no visualizador de cenas, vamos adicionar um nó chamado 'TileMap'.
 ![Godot_28](./docs/Godot_28.png)
-Agora vamos adicionar algo nesta cena, com o 'Node2D' selecionado no visualizador de cenas, vamos adicionar um nó chamado 'TileMap'.
+* Com o 'TileMap' selecionado vamos no inspetor adicionar um novo 'TileSet', clique mais uma vez no 'TileSet' para abrir a janela de edição de TileSet.
 ![Godot_29](./docs/Godot_29.png)
+* Arraste o 'WallTileSet.png' para area indicada (1).
 ![Godot_30](./docs/Godot_30.png)
-
+* Selecionamos nosso TileSet(1) e clicaremos em 'Novo Autotile' (2).
 ![Godot_31](./docs/Godot_31.png)
+* Clique em Região(1) e então no botão indicado (2), para subdividir nosso TileSet automaticamente em 9 partes iguais(3).
 ![Godot_32](./docs/Godot_32.png)
+* Então vamos adicionar colisão ao nosso TileSet, basta clicar em 'Colisão' (1), então selecionar o tipo de colisão que adicionaremos, no cado será uma colisão retangular (2), então selecionamos a parte que desejamos adicionar a colisão e clicamos nela fazendo um movimento de arrastar para que a colisão preencha todo o quadrado selecionado (3). Repetimos o processo para todos os 9 quadrados.
 ![Godot_33](./docs/Godot_33.png)
+
+* Agora em 'BitMask' (1), faremos um desenho para indicar ao Godot que partes são referentes aos cantos, a parte de cima, a parte do meio, etc. (2), basicamente quando queremos indicar que uma parte é um canto, selecionamos o canto oposto, como mostra a figura, quando queremos indicar que uma parte á superfície, marcamos um linha na parte inferior do quadrado, e por fim quando queremos indicar que faz parte do meio marcamos tudo, caso haja mais uma parte maraca da mesma maneira, o Godot desenhará estes tiles aleatoriamente, com uma proporção obedecendo a quantidade de tiles desenhados iguais, esta proporção pode ser mudada na aba 'prioridade'.
 ![Godot_34](./docs/Godot_34.png)
+
+* Na aba 'Icone' selecionaremos o Tile principal, que no nosso caso será o tile do meio.
 ![Godot_35](./docs/Godot_35.png)
+
+* Por fim com o 'TileMap' selecionado (1), vamos no inspetor alterar o tamanho do nossos tiles para 32 por 32 (2)
 ![Godot_36](./docs/Godot_36.png)
+* Tendo feito estes passos basta agora desenhar nossa cena, adicionando chão, paredes e obstáculos, para apagar um tile basta clicar nele com o botão direito do mouse.
 ![Godot_37](./docs/Godot_37.png)
+* Agora com o Node2D selecionado podemos a partir da nossa pasta 'src' arrastar nosso personagem (Personagem.tscn) para nossa cena(2). 
 ![Godot_38](./docs/Godot_38.png)
+* Agora ao testar nosso jogo o personagem não mais cairá para fora da tela, e sim parará no chão que desenhamos com nossos tiles.
 ![Godot_39](./docs/Godot_39.png)
 
 * **Controlando o personagem**
