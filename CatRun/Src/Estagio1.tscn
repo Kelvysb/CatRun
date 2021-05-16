@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Src/Personagem.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/WallTileSet.png" type="Texture" id=2]
 [ext_resource path="res://Src/Moeda.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Src/GUI.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
@@ -122,10 +123,39 @@ tile_data = PoolIntArray( 589913, 0, 0, 589914, 0, 1, 589915, 0, 1, 589916, 0, 1
 [node name="Personagem" parent="." instance=ExtResource( 1 )]
 position = Vector2( 181.338, 340.524 )
 
-[node name="Area2D" type="Area2D" parent="."]
-
 [node name="Moeda" parent="." instance=ExtResource( 3 )]
 position = Vector2( 367.527, 410.371 )
 
 [node name="Moeda2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 522.334, 453 )
+position = Vector2( 507.502, 444.524 )
+
+[node name="Moeda3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 668.415, 426.263 )
+
+[node name="Moeda4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 894.081, 419.907 )
+
+[node name="Moeda5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1099.62, 407.193 )
+
+[node name="Moeda6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1280.79, 408.253 )
+
+[node name="Moeda7" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1661.14, 435.799 )
+
+[node name="Moeda8" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2077.96, 451.69 )
+
+[node name="Moeda9" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2280.14, 472.084 )
+
+[node name="Moeda10" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2480.38, 438.181 )
+
+[node name="Moeda11" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2726.17, 424.408 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 4 )]

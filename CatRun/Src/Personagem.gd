@@ -5,11 +5,11 @@ export var velocidade = 800
 export var forca_pulo = 500
 export var friccao = 0.25
 export var aceleracao = 0.1
+export var moedas = 0
 
 var state_machine
 var sprite
 var movimento = Vector2.ZERO
-var moedas = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,3 +61,6 @@ func _process(delta):
 		if colisao.collider and "Moedas" in colisao.collider.get_groups():
 			colisao.collider.free()
 			moedas += 1
+			
+	if global_position.y >= 700:
+		get_tree().reload_current_scene()

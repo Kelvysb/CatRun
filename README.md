@@ -14,7 +14,7 @@
 * **Sprites**
     Sprites são a arte que utilizaremos em nosso jogo, são desenhos do personagem em varias posições, desenhos do ambiente, etc.
 
-    Os sprites que utilizaremos estão aqui: [Sprites](/docs/sprites.zip).
+    Os sprites que utilizaremos estão aqui: [Sprites](/docs/assets.zip).
 
 * **Noções básicas de desenvolvimento**
     Para a parte logica do nosso jogo utilizaremos a linguagem de programação GDScript, linguagem baseada em Python, sendo assim noções básicas de desenvolvimento em Python são essenciais para o workshop, para  os iniciantes na área de desenvolvimento recomendo assistir alguns tutoriais básicos sobre Python.
@@ -54,49 +54,98 @@ Programas:
 
 ## WorkShop
 
-### O Godot
-
-* **Criando um projeto**
+### **Criando um projeto**
 
 ![Godot_01](./docs/Godot_01.png)
+No gestor de projetos do Godot podemos escolher um projeto existente ou criar um novo clicando em 'Novo Projeto'(1), podemos então escolher o nome(3) de nosso projeto e a pasta onde o guardaremos(2), com o botão 'Criar Pasta' (4) será criada uma pasta vazia com o nome de nosso projeto. finalmente podemos clicar em 'Criar e Editar' (5).
 ![Godot_02](./docs/Godot_02.png)
+Na tela principal do Godot podemos identificar as partes mais importantes que utilizaremos: 
+* 1 - O Modo, nele podemos escolher como visualizaremos a nossa cena, em 3D, em 2D ou visualizar nossos scripts.
+* 2 - O Viewport, ele e nosso espaço de trabalho aonde montaremos nossas cenas e scripts.
+* 3 - Visualizador de cena, aqui podemos ver os elementos que compõe nossa cena, adicionar novos nós, remover nós, reordenar, etc.
+* 4 - Sistema de arquivos, aqui visualizamos onde estão guardados os arquivos de nosso projeto, por aqui podemos adicionar novas cenas e atores, bem como usar os assets (Imagens, sons, etc.).
+* 5 - Inspetor, aqui podemos alterar as propriedades dos nós que selecionamos visualizador de cenas.
+* 6 - Controle de jogo, aqui podemos testar nosso jogo.
 ![Godot_03](./docs/Godot_03.png)
+Primeiramente vamos copiar para a pasta e nosso projeto os assets, podemos fazer isso no próprio explorador de arquivos do windows o Godot vai identificar a pasta nova e vai importar para o projeto os assets.
 ![Godot_04](./docs/Godot_04.png)
+E por fim vamos criar uma pasta chamada 'src' (source) on guardaremos nossas cenas, atores e scripts.
 
-* **Criando um personagem**
+### **Criando um personagem**
 ![Godot_05](./docs/Godot_05.png)
+Para criar nosso personagem vamos ate o visualizador de cenas, e clicaremos em Outro nó, na janela que aparecerá podemos procurar por 'KinematicBody2D', essa será a base para nosso personagem (ator).
 ![Godot_06](./docs/Godot_06.png)
 ![Godot_07](./docs/Godot_07.png)
+Agora podemos salvar nosso personagem com 'CTRL+S' para isso escolhemos como pasta de destino a pasta 'src' que criamos a pouco.
 ![Godot_08](./docs/Godot_08.png)
+No visualizador de cenas podemos renomear nosso ator de 'KinematicBody2D' para 'Personagem' para facilitar nossa visualização.
+Com o nó do personagem selecionado podemos clicar no botão '+' para adicionar um novo sub-nó ao nosso ator, procuraremos por 'CollisionShape2D', que será responsável a dar uma forma física ao nosso personagem.
 ![Godot_09](./docs/Godot_09.png)
+Com o 'CollisionShape2D' selecionado podemos ir ao 'inspetor' do outro lado da tela, e selecionar uma forma para nosso 'CollisionShape2D', no caso escolheremos um retângulo.
 ![Godot_10](./docs/Godot_10.png)
-
+Agora com o nó do personagem selecionado clicaremos mais uma vez no botão '+' para adicionar um nó chamado 'Sprite' este é responsável por dar uma representação gráfica ao nosso ator.
 ![Godot_11](./docs/Godot_11.png)
+com o 'Sprite' selecionado podemos ir a nossa pasta d3e assets e arrastar o arquivo chamado 'sprites.png' até o inspetor no campo 'Texture', com isso daremos esta textura ao nosso ator.
 ![Godot_12](./docs/Godot_12.png)
 ![Godot_13](./docs/Godot_13.png)
+Porem esta textura contem toda a animação de nosso personagem, então temos que dizer no inspetor que esta impagem e uma copmposição, parta isso iremos ate a aba 'Animation' e mudaremos o valor ede 'HFrames' para 53, indicando que nosso arquivo de sprites e composto por 53 imagens dispostas na horizontal.
+
 ![Godot_14](./docs/Godot_14.png)
 ![Godot_15](./docs/Godot_15.png)
+Agora selecionando o nó 'CollisionShape2D' podemos visualizar o formato de do retanguilo de colisão que dará ao nosso ator a sua forma fisica, podemos redimensiona-lo ate ele ficar um pouco menor que a imagem do sprite.
 ![Godot_16](./docs/Godot_16.png)
-![Godot_17](./docs/Godot_17.png)
+Agora por fim podemos posicionar tanto o 'Sprite' quanto o 'Collisionshape2D' para que ambos fiquem imediatamente acima da linha vermelha (x) do 'viewport'.
 
 * **Programando o personagem**
 
 ![Godot_18](./docs/Godot_18.png)
+Copm nosso personagem selecionado podemos clicar no botão de adicionar script (2), e com isso criar um script relacionado a ele.
 ![Godot_19](./docs/Godot_19.png)
+Com isso podemos selecionar o modo script(1) para visualizar nosso código, inicialmente ele estará vazio apenas com uma função '_ready()', e mais uma função comentada '_process(delta)' que des-comentaremos e utilizaremos logo em seguida.
 
-Change
 ![Godot_20](./docs/Godot_20.png)
+Agfora podemos adicionar nosso promeiro codigo, que será responsavel por adicionar gravidade ao nosso ator.
+
+```python
+extends KinematicBody2D
+
+export var gravidade = 1500
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+    pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+			
+	movimento.y += gravidade * delta
+
+	movimento = move_and_slide(movimento, Vector2.UP)		
+```
+
+A variável 'gravidade'(1) guardará o valor da força que a gravidade terá sobre nosso ator,
+já a variável 'movimento' (2) guardara a direção e força do movimento.
+Na função '_process(delta)' incluiremos o acumulo de velocidade no eixo 'y' relacionado a gravidade, sempre multiplicando pelo parâmetro 'delta' que é a diferença de tempo entre os frames isso fará com que o movimento seja constante independente da velocidade do computador que o jogo estiver sendo executado.
+Por fim chamaremos a função 'move_and_slide(movimento, Vector2.UP)', que é responsável por executar o movimento, o primeiro parâmetro e o movimento em si, e o segundo e para indicar ao Godot que a direção que consideramos para cima é 'UP' ou seja eixo 'y' para cima.
+
 
 ![Godot_21](./docs/Godot_21.png)
 ![Godot_22](./docs/Godot_22.png)
-![Godot_23](./docs/Godot_23.png)
-![Godot_24](./docs/Godot_24.png)
+Podemos então testar nosso jogo e veremos um gato caindo no canto da tela.
+(ao clicar em play pela promeira vez o Godot perguntara qual a cenma principal, basta selecionar o arquivo de nosso Personagem (Personagem.tscn))
 
-* **Criando uma cena**
+
+### **Criando uma cena**
 ![Godot_25](./docs/Godot_25.png)
 ![Godot_26](./docs/Godot_26.png)
+Agora precisamos criar uma cena para que nosso ator possa interagir.
+Primeiro vamos no explorador de arquivos e vamos clicar com o botão direito na pasta 'src', e logo em seguida em 'Nova Cena', colocaremos o nome de 'Estagio1', em seguida no visualizador de cena escolheremos 'Cena 2D'
+
 ![Godot_27](./docs/Godot_27.png)
+Depois de salvar nossa cena podemos clicar com o botão direto sobre ela no explorador de arquivos, para defini-la como cena principal, assis nosso jogo se iniciará por ela. 
 ![Godot_28](./docs/Godot_28.png)
+Agora vamos adicionar algo nesta cena, com o 'Node2D' selecionado no visualizador de cenas, vamos adicionar um nó chamado 'TileMap'.
 ![Godot_29](./docs/Godot_29.png)
 ![Godot_30](./docs/Godot_30.png)
 
@@ -168,5 +217,20 @@ Change
 ![Godot_82](./docs/Godot_82.png)
 ![Godot_83](./docs/Godot_83.png)
 ![Godot_84](./docs/Godot_84.png)
+
+* **Score**
 ![Godot_85](./docs/Godot_85.png)
 ![Godot_86](./docs/Godot_86.png)
+![Godot_87](./docs/Godot_87.png)
+![Godot_88](./docs/Godot_88.png)
+![Godot_89](./docs/Godot_89.png)
+![Godot_90](./docs/Godot_90.png)
+![Godot_91](./docs/Godot_91.png)
+![Godot_92](./docs/Godot_92.png)
+![Godot_93](./docs/Godot_93.png)
+![Godot_94](./docs/Godot_94.png)
+![Godot_95](./docs/Godot_95.png)
+![Godot_96](./docs/Godot_96.png)
+
+* **Reset**
+![Godot_97](./docs/Godot_97.png)

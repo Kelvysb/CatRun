@@ -75,17 +75,20 @@ animation = "Andando"
 [sub_resource type="AnimationNodeAnimation" id=7]
 animation = "Correndo"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Parado"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "Pulando"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
 advance_condition = "Andando"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
 advance_condition = "Correndo"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+advance_condition = "Pulando"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=13]
 advance_condition = "Pulando"
@@ -94,32 +97,29 @@ advance_condition = "Pulando"
 advance_condition = "Pulando"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=15]
-advance_condition = "Pulando"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
 switch_mode = 1
 advance_condition = "Parado"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
 advance_condition = "Parado"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
 advance_condition = "Andando"
 
-[sub_resource type="AnimationNodeStateMachine" id=21]
+[sub_resource type="AnimationNodeStateMachine" id=18]
 states/Andando/node = SubResource( 6 )
 states/Andando/position = Vector2( 490, 57 )
 states/Correndo/node = SubResource( 7 )
 states/Correndo/position = Vector2( 733, 162 )
-states/Parado/node = SubResource( 9 )
+states/Parado/node = SubResource( 8 )
 states/Parado/position = Vector2( 214, 162 )
-states/Pulando/node = SubResource( 10 )
+states/Pulando/node = SubResource( 9 )
 states/Pulando/position = Vector2( 490, 271 )
-transitions = [ "Parado", "Andando", SubResource( 11 ), "Andando", "Correndo", SubResource( 12 ), "Parado", "Pulando", SubResource( 13 ), "Andando", "Pulando", SubResource( 14 ), "Correndo", "Pulando", SubResource( 15 ), "Pulando", "Parado", SubResource( 16 ), "Andando", "Parado", SubResource( 17 ), "Correndo", "Andando", SubResource( 18 ) ]
+transitions = [ "Parado", "Andando", SubResource( 10 ), "Andando", "Correndo", SubResource( 11 ), "Parado", "Pulando", SubResource( 12 ), "Andando", "Pulando", SubResource( 13 ), "Correndo", "Pulando", SubResource( 14 ), "Pulando", "Parado", SubResource( 15 ), "Andando", "Parado", SubResource( 16 ), "Correndo", "Andando", SubResource( 17 ) ]
 start_node = "Parado"
-graph_offset = Vector2( -112, 18.864 )
+graph_offset = Vector2( -112, 71.216 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
 [node name="Personagem" type="KinematicBody2D"]
 script = ExtResource( 2 )
@@ -132,7 +132,7 @@ shape = SubResource( 1 )
 position = Vector2( -0.264866, -16.2649 )
 texture = ExtResource( 1 )
 hframes = 53
-frame = 36
+frame = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Parado"
@@ -142,10 +142,10 @@ anims/Parado = SubResource( 4 )
 anims/Pulando = SubResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 21 )
+tree_root = SubResource( 18 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 22 )
+parameters/playback = SubResource( 19 )
 parameters/conditions/Andando = false
 parameters/conditions/Correndo = false
 parameters/conditions/Parado = false
