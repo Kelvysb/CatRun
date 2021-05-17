@@ -61,7 +61,7 @@ Programas:
 
 
 ![Godot_01](./docs/Godot_01.png)
-* Na tela principal do Godot podemos identificar as partes mais importantes que utilizaremos: 
+* Na tela principal do Godot podemos identificar as partes mais importantes que utilizaremos:
     * 1 - O Modo, nele podemos escolher como visualizaremos a nossa cena, em 3D, em 2D ou visualizar nossos scripts.
     * 2 - O Viewport, ele e nosso espaço de trabalho aonde montaremos nossas cenas e scripts.
     * 3 - Visualizador de cena, aqui podemos ver os elementos que compõe nossa cena, adicionar novos nós, remover nós, reordenar, etc.
@@ -112,6 +112,8 @@ extends KinematicBody2D
 
 export var gravidade = 1500
 
+var movimento = Vector2.ZERO
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
     pass
@@ -119,16 +121,16 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-			
+
 	movimento.y += gravidade * delta
 
-	movimento = move_and_slide(movimento, Vector2.UP)		
+	movimento = move_and_slide(movimento, Vector2.UP)
 ```
 
-A variável 'gravidade'(1) guardará o valor da força que a gravidade terá sobre nosso ator,
-já a variável 'movimento' (2) guardara a direção e força do movimento.
-Na função '_process(delta)' incluiremos o acumulo de velocidade no eixo 'y' relacionado a gravidade, sempre multiplicando pelo parâmetro 'delta' que é a diferença de tempo entre os frames isso fará com que o movimento seja constante independente da velocidade do computador que o jogo estiver sendo executado.
-Por fim chamaremos a função 'move_and_slide(movimento, Vector2.UP)', que é responsável por executar o movimento, o primeiro parâmetro e o movimento em si, e o segundo e para indicar ao Godot que a direção que consideramos para cima é 'UP' ou seja eixo 'y' para cima.
+* A variável 'gravidade'(1) guardará o valor da força que a gravidade terá sobre nosso ator,
+* já a variável 'movimento' (2) guardara a direção e força do movimento, iniciaremos ela com o valor ZERO (Vector2.ZERO) que contem valoes zerados para 'x' e 'y'.
+* Na função '_process(delta)' incluiremos o acumulo de velocidade no eixo 'y' relacionado a gravidade, sempre multiplicando pelo parâmetro 'delta' que é a diferença de tempo entre os frames isso fará com que o movimento seja constante independente da velocidade do computador que o jogo estiver sendo executado.
+* Por fim chamaremos a função 'move_and_slide(movimento, Vector2.UP)', que é responsável por executar o movimento, o primeiro parâmetro e o movimento em si, e o segundo e para indicar ao Godot que a direção que consideramos para cima é 'UP' ou seja eixo 'y' para cima.
 ![Godot_20](./docs/Godot_20.png)
 
 
@@ -144,7 +146,7 @@ Primeiro vamos no explorador de arquivos e vamos clicar com o botão direito na 
 ![Godot_25](./docs/Godot_25.png)
 ![Godot_26](./docs/Godot_26.png)
 
-* Depois de salvar nossa cena podemos clicar com o botão direto sobre ela no explorador de arquivos, para defini-la como cena principal, assis nosso jogo se iniciará por ela. 
+* Depois de salvar nossa cena podemos clicar com o botão direto sobre ela no explorador de arquivos, para defini-la como cena principal, assis nosso jogo se iniciará por ela.
 ![Godot_27](./docs/Godot_27.png)
 * Agora vamos adicionar algo nesta cena, com o 'Node2D' selecionado no visualizador de cenas, vamos adicionar um nó chamado 'TileMap'.
 ![Godot_28](./docs/Godot_28.png)
@@ -169,50 +171,370 @@ Primeiro vamos no explorador de arquivos e vamos clicar com o botão direito na 
 ![Godot_36](./docs/Godot_36.png)
 * Tendo feito estes passos basta agora desenhar nossa cena, adicionando chão, paredes e obstáculos, para apagar um tile basta clicar nele com o botão direito do mouse.
 ![Godot_37](./docs/Godot_37.png)
-* Agora com o Node2D selecionado podemos a partir da nossa pasta 'src' arrastar nosso personagem (Personagem.tscn) para nossa cena(2). 
+* Agora com o Node2D selecionado podemos a partir da nossa pasta 'src' arrastar nosso personagem (Personagem.tscn) para nossa cena(2).
 ![Godot_38](./docs/Godot_38.png)
 * Agora ao testar nosso jogo o personagem não mais cairá para fora da tela, e sim parará no chão que desenhamos com nossos tiles.
 ![Godot_39](./docs/Godot_39.png)
 
-* **Controlando o personagem**
+### **Controlando o personagem**
+Para controlar o personagem precisamos primeiramente dizer ao Godot quais são os comandos que o jogador poderá utilizar:
+* No menu 'Projeto' (1) clicamos em 'Configurações do projeto' (2)
+* Na janela de configurações do projeto vamos ate a aba 'Mapa de Entrada' (3).
+* Nesta aba podemos adicionar novos comandos e associar teclas ou botões a estes commandos.
+* No campo 'Ação'(3) vamos dar um nome a nosso comando, podemos acessar o camando no codigo usando este nome.
+* então clicaremos em 'Adicionar'(4)
 ![Godot_40](./docs/Godot_40.png)
+* O novo comando será adicionado no final da lista.
+* Lá podemos adicinar a associação de teclas para nossa ação, clicando no '+'(2), en seguida clicando no tipo de comando que adicionaremos, no nosso caso será 'Tecla' (3).
+* Uma janeça será mostrada aguardando a entrada no teclado(4).
 ![Godot_41](./docs/Godot_41.png)
+Vamos adicionar os seguintes comandos e associações:
+* 'Mover_Direita' - Teclas: 'D', 'Seta para direita'.
+* 'Mover_Esquerda' - Teclas: 'A', 'Seta para esquerda'.
+* 'Pular' - Teclas: 'W', 'Seta para cima', 'Barra de espaço'.
 ![Godot_42](./docs/Godot_42.png)
+Agora vamos para nosso código, clicando na aba 'Scripts':
+* Primeiramente vamos mudar um pouco nosso código, para lers os comandos e fazer com que nosso personagem se mova:
+```Python
+extends KinematicBody2D
+
+export var gravidade = 1500
+export var velocidade = 800
+
+var movimento = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+    pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+
+	movimento.y += gravidade * delta
+
+    movimento.x = 0
+
+    if Input.is_action_pressed("Mover_Direita"):
+		movimento.x += velocidade
+	if Input.is_action_pressed("Mover_Esquerda"):
+		movimento.x -= velocidade
+
+	movimento = move_and_slide(movimento, Vector2.UP)
+```
+* Adicionamos uma variável chamada 'velocidade' que vai guardar o quão rápido será nosso personagem iniciaremos ela com o valor de 800.
+* Então na função '_process(delta)', limparemos o valor x da variável movimento.
+* adicionaremos as condições para mover no eixo 'x' baseado nos comandos 'Mover_Direita' e 'Mover_Esquerda', para acessar os comandos usamos a classe global do Godot 'Input' com a função 'is_action_pressed' que verifica se a ação esta pressionada.
 ![Godot_43](./docs/Godot_43.png)
+Com isso nosso personagem poderá se mover para esquerda e para direita.
 ![Godot_44](./docs/Godot_44.png)
+Agora vamos programar o pulo de nosso personagem:
+* Vamos adicionar algumas coisas em nosso código:
+```Python
+extends KinematicBody2D
+
+export var gravidade = 1500
+export var velocidade = 800
+export var forca_pulo = 400
+
+var movimento = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+    pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+
+	movimento.y += gravidade * delta
+
+    movimento.x = 0
+
+    if Input.is_action_pressed("Mover_Direita"):
+		movimento.x += velocidade
+	if Input.is_action_pressed("Mover_Esquerda"):
+		movimento.x -= velocidade
+
+	movimento = move_and_slide(movimento, Vector2.UP)
+
+    if Input.is_action_just_pressed("Pular"):
+		if is_on_floor():
+			movimento.y = forca_pulo * -1
+			estado = "Pulando"
+```
+
+* Primeiro adicionaremos uma variavel para guardar a força do pulo, 'forca_pulo' e a iniciaremos com o valor de 400.
+* Então adicionaremos  verificação se a tecla de pulo foi pressionada logo após o 'move_an_slide', usando a função do 'Input', 'is_action_just_pressed'
+* Fazemos mais um checagem com a função do 'KinematicBody2D', 'is_on_floor()', que verifica se o personagem esta no chão, para que ele so pule se estiver no chão.
+* Por fim colocamos a força do pulo na eixo 'y' do movimento, multiplicando por '-1', pois no Godot o eixo 'y' aumenta para baixo, ou seja e invertido.
+
 ![Godot_45](./docs/Godot_45.png)
+Com isso nosso personagem pode agora pular.
+
 ![Godot_46](./docs/Godot_46.png)
+Mas este movimentop não parece natural, ele começa a se mover instataneamente e para instantaneamente, vamos adicionar algo para resolver isso, atrito e aceleração:
+
+* Primeiro vamos modificar um pouco nosso código:
+
+```Python
+extends KinematicBody2D
+
+export var gravidade = 1500
+export var velocidade = 800
+export var forca_pulo = 500
+export var atrito = 0.25
+export var aceleracao = 0.1
+
+var movimento = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+
+	movimento.y += gravidade * delta
+
+	var direcao = 0
+
+	if Input.is_action_pressed("Mover_Direita"):
+		direcao += 1
+	if Input.is_action_pressed("Mover_Esquerda"):
+		direcao -= 1
+
+	if direcao != 0:
+		movimento.x = lerp(movimento.x, direcao * velocidade, aceleracao)
+	else:
+		movimento.x = lerp(movimento.x, 0, atrito)
+
+	movimento = move_and_slide(movimento, Vector2.UP)
+
+	if Input.is_action_just_pressed("Pular"):
+		if is_on_floor():
+			movimento.y = forca_pulo * -1
+```
+
+* Vamos adicionar 2 variáveis novas, 'atrito' e 'aceleração', com os valores 025 e 0.1 respectivamente.
+* Então na nossa função vamos substituir a inicialização do 'movimento.x = 0' por uma declaração de variável: 'var direcao = 0'.
+* E nas checagem das teclas pressionadas mudaremos o valor desta variável de acordo.
+* Logo após checaremos se esta variável mudou de seu valor inicial '0'.
+*  Caso sim, mudaremos o valor de 'movimento.x' de acordo coma direção, mas agora usando uma função global do Godot, chamada 'lerp', que nama mais e um modo de fazer os valores mudarem de maneira progressiva, baseado em uma aceleração. (lerp significa 'linear interpolation', qua nada mais é que uma função que gera uma linha em um gráfico cartesiano como mostra a figura)
+* Caso contrario, faremos algo parecido mas dessa vez invertendo a de aceleração para atrito, para assim o personagem desacelerar lentamente.
+
 ![Godot_47](./docs/Godot_47.png)
 
 * **Animando o personagem**
 
+Agora vamos Animar o personagem, começando pelo básico, vamos fazer nosso personagem olhar para direção certa quando se movimenta:
+* se formos nas propriedade do Sprite (inspetor), veremos uma propriedade chamada 'size' que e referente ao tamanho de nossa sprite.
+* Se mudarmos ela para '-1' no eixo 'x' vemos que nossa sprite passa a apontar pára o lado oposto.
+* Utilizaremos isso no código para definir para onde nosso personagem esta apontando.
 ![Godot_48](./docs/Godot_48.png)
+
+
+Em nosso código adicionaremos algumas coisas:
+```Python
+extends KinematicBody2D
+
+export var gravidade = 1500
+export var velocidade = 800
+export var forca_pulo = 500
+export var atrito = 0.25
+export var aceleracao = 0.1
+
+var sprite
+var movimento = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	sprite = $Sprite
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+
+	movimento.y += gravidade * delta
+
+	var direcao = 0
+
+	if Input.is_action_pressed("Mover_Direita"):
+		direcao += 1
+        sprite.set_scale(Vector2(1, 1))
+
+	if Input.is_action_pressed("Mover_Esquerda"):
+		direcao -= 1
+        sprite.set_scale(Vector2(-1, 1))
+
+	if direcao != 0:
+		movimento.x = lerp(movimento.x, direcao * velocidade, aceleracao)
+	else:
+		movimento.x = lerp(movimento.x, 0, atrito)
+
+	movimento = move_and_slide(movimento, Vector2.UP)
+
+	if Input.is_action_just_pressed("Pular"):
+		if is_on_floor():
+			movimento.y = forca_pulo * -1
+```
+* Adicionaremos uma variável chamada 'sprite' que referenciará a Sprite de nosso personagem.
+* Na função '_ready()' removeremos o 'pass', e adicionaremos a inicialização desta variável, com o valor de '\$Sprite', usamos o '\$' quando queremos acessar algum nó de nossa cena/ator.
+* Por fim na checagem de direção na função 'func _process(delta)', colocaremos a alteração do size do sprite: 'sprite.set_scale(Vector2(1, 1))' para direita e 'sprite.set_scale(Vector2(-1, 1))' para esquerda.
 ![Godot_49](./docs/Godot_49.png)
 
+
+Agora nosso personagem aponta para o lado o qual esta se movendo.
 ![Godot_50](./docs/Godot_50.png)
+
+Agora sim vamos animar nosso personagem:
+* Vamos adicionar um  novo nó ao nosso Personagem chamado 'AnimationPlayer'.
 ![Godot_51](./docs/Godot_51.png)
+
+Ao Selecionar este nó teremos acesso ao painel de animação do Godot:
+* Nele podemos adicionar todas as animações relativas ao nosso personagem.
+* Clicaremos em 'Animação' (3) e logo em seguida em 'novo'(4).
+* então escolheremos um nome para nossa primeira animação, no caso esta será 'Parado'.
 ![Godot_52](./docs/Godot_52.png)
-![Godot_53](./docs/Godot_53.png)
+
+
+* Agora podemos em clicar em 'Adicionar Pista'(1), para adicionar uma sequencia de animação.
+* Escolheremos como tipo 'Pista de Propriedade'(2).
+* Na janela que se abrir selecionaremos o Sprite(3), como nó que animaremos.
+* Na janela seguinte selecionaremos 'Frame'(4) como a propriedade do 'Sprite' que animaremos.
 ![Godot_54](./docs/Godot_54.png)
+
+* Na nossa nova pista mudaremos as seguintes propriedades:
+    * Loop (1) - para que nossa animação seja executada em loop.
+    * Tempo (2) - para que nossa animação tenha o tempo de 1 segundo.
+    * Modo continuo(3) - para que nossa animação tenha uma transição continua.
+* Na janela de animação podemos então clicar com o botão direito na pista para adicionar uma 'Chave'(4) na posição 0 segundos.
 ![Godot_55](./docs/Godot_55.png)
+
+* Adicionaremos então mais uma chave na posição de 1 segundo(2).
+* E com a segunda chave selecionada, vamos na janela de inspetor, e mudaremos a propriedade 'value'(3) para 9, indicando que nossa animação termina no frame 9.
+* Então configuraremos esta animação com a principal clicando no botão(4).
+* podemos agora testar nossa animação no botão 'play'(5)
 ![Godot_56](./docs/Godot_56.png)
+
+Faremos isso agora para as seguintes animações:
+* Andando:
+    * Tempo 1 segundo.
+    * Valor da chave inicial: 10
+    * Valor da chave final: 25
+* Correndo:
+    * Tempo 1 segundo.
+    * Valor da chave inicial: 26
+    * Valor da chave final: 39
+* Pulando:
+    * Tempo 1 segundo.
+    * Valor da chave inicial: 40
+    * Valor da chave final: 52
+    * Neste caso a animação não será em loop.
 ![Godot_57](./docs/Godot_57.png)
+
+Agora adicionaremos o nó responsável por controlar nossas animações, ele se chama 'AnimationTree'.
 ![Godot_58](./docs/Godot_58.png)
+
+Com ele selecionado, iremos no inspetor e mudaremos a propriedade 'Anim Player'(2) para nosso 'AnimationPlayer'(3).
 ![Godot_59](./docs/Godot_59.png)
 
+
+E na propriedade 'Tree Root'(1), criaremos um 'Novo AnimationNodeStateMachine'(2).
 ![Godot_60](./docs/Godot_60.png)
+
+* Ao salvar e clicar novamente no 'AnimationTree', será exibida a janela de edição de animationTree.
+* No inpertor podemos marcar esta animation tree como ativa(2).
 ![Godot_61](./docs/Godot_61.png)
+
+* Com a ferramenta 'seta' selecionada vamos clicar com o botão direto na area do editor.
+* clicar em Adicionar Animação(1).
+* E por fim adicionar nossas animações(2).
 ![Godot_62](./docs/Godot_62.png)
 ![Godot_63](./docs/Godot_63.png)
+
+*Selecionaremos a animação Parado(1), e marcaremos ela como inicial(2).
 ![Godot_64](./docs/Godot_64.png)
+
+* Com a ferramente transição(1) selecionada.
+* Criaremos as transições de nossa animação como mostra a figura(2), para criar uma transição basta clicar e arrastar de uma animação parta a outra.
 ![Godot_65](./docs/Godot_65.png)
+
+* Com a ferramenta 'seta'(1) selecionada, vamos alterar as propriedades de nossas transições.
+* começando pela transição de Pulando para Parado, no inspetor, mudaremos a propriedade 'Switch mode'(3) para 'AtEnd'(4), e a propriedade 'Advance Condition' para 'Andando'.
 ![Godot_66](./docs/Godot_66.png)
+
+Para as 3 transições da imagem, mudaremos a 'Advance condition' para 'Pulando'.
 ![Godot_67](./docs/Godot_67.png)
+
+Para estas duas mudaremos para 'Andando'.
 ![Godot_68](./docs/Godot_68.png)
+
+Para esta: 'Parado'.
 ![Godot_69](./docs/Godot_69.png)
 
-
+E por fim para esta ultima: 'Correndo'
 ![Godot_70](./docs/Godot_70.png)
+
+Agora vamos para nosso código:
+```Python
+extends KinematicBody2D
+
+export var gravidade = 1500
+export var velocidade = 800
+export var forca_pulo = 500
+export var atrito = 0.25
+export var aceleracao = 0.1
+export var moedas = 0
+
+var state_machine
+var sprite
+var movimento = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	sprite = $Sprite
+	state_machine = $AnimationTree.get("parameters/playback")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+
+	movimento.y += gravidade * delta
+
+	var direcao = 0
+
+	if Input.is_action_pressed("Mover_Direita"):
+		direcao += 1
+		sprite.set_scale(Vector2(1, 1))
+	if Input.is_action_pressed("Mover_Esquerda"):
+		direcao -= 1
+		sprite.set_scale(Vector2(-1, 1))
+
+	if direcao != 0:
+		movimento.x = lerp(movimento.x, direcao * velocidade, aceleracao)
+	else:
+		movimento.x = lerp(movimento.x, 0, atrito)
+
+	movimento = move_and_slide(movimento, Vector2.UP)
+
+	var estado = "Parado"
+
+	if not is_on_floor():
+		estado = "Pulando"
+
+	if abs(movimento.x) > 50 and abs(movimento.x) <= 400:
+		estado = "Andando"
+
+	if abs(movimento.x) > 400:
+		estado = "Correndo"
+
+	if Input.is_action_just_pressed("Pular"):
+		if is_on_floor():
+			movimento.y = forca_pulo * -1
+			estado = "Pulando"
+
+	state_machine.travel(estado)
+```
 ![Godot_71](./docs/Godot_71.png)
 ![Godot_72](./docs/Godot_72.png)
 
