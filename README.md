@@ -105,7 +105,7 @@ Com o nó do personagem selecionado podemos clicar no botão '+' para adicionar 
 * Com isso podemos selecionar o modo script(1) para visualizar nosso código, inicialmente ele estará vazio apenas com uma função '_ready()', e mais uma função comentada '_process(delta)' que des-comentaremos e utilizaremos logo em seguida.
 ![Godot_19](./docs/Godot_19.png)
 
-* Agora podemos adicionar nosso proveiro código, que será responsável por adicionar gravidade ao nosso ator.
+* Agora podemos adicionar nosso primeiro código, que será responsável por adicionar gravidade ao nosso ator.
 
 ```python
 extends KinematicBody2D
