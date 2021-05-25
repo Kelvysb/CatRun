@@ -132,7 +132,7 @@ shape = SubResource( 1 )
 position = Vector2( -0.264866, -16.2649 )
 texture = ExtResource( 1 )
 hframes = 53
-frame = 6
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Parado"

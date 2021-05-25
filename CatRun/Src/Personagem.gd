@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-export var gravidade = 1500
-export var velocidade = 800
-export var forca_pulo = 500
-export var friccao = 0.25
-export var aceleracao = 0.1
+var gravidade = 1500
+var velocidade = 800
+var forca_pulo = 500
+var friccao = 0.25
+var aceleracao = 0.1
 export var moedas = 0
 
 var state_machine

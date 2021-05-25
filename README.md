@@ -198,8 +198,8 @@ Agora vamos para nosso código, clicando na aba 'Scripts':
 ```Python
 extends KinematicBody2D
 
-export var gravidade = 1500
-export var velocidade = 800
+var gravidade = 1500
+var velocidade = 800
 
 var movimento = Vector2.ZERO
 
@@ -233,9 +233,9 @@ Agora vamos programar o pulo de nosso personagem:
 ```Python
 extends KinematicBody2D
 
-export var gravidade = 1500
-export var velocidade = 800
-export var forca_pulo = 400
+var gravidade = 1500
+var velocidade = 800
+var forca_pulo = 400
 
 var movimento = Vector2.ZERO
 
@@ -261,7 +261,6 @@ func _process(delta):
     if Input.is_action_just_pressed("Pular"):
 		if is_on_floor():
 			movimento.y = forca_pulo * -1
-			estado = "Pulando"
 ```
 
 * Primeiro adicionaremos uma variavel para guardar a força do pulo, 'forca_pulo' e a iniciaremos com o valor de 400.
@@ -280,11 +279,11 @@ Mas este movimentop não parece natural, ele começa a se mover instataneamente 
 ```Python
 extends KinematicBody2D
 
-export var gravidade = 1500
-export var velocidade = 800
-export var forca_pulo = 500
-export var atrito = 0.25
-export var aceleracao = 0.1
+var gravidade = 1500
+var velocidade = 800
+var forca_pulo = 500
+var atrito = 0.25
+var aceleracao = 0.1
 
 var movimento = Vector2.ZERO
 
@@ -338,11 +337,11 @@ Em nosso código adicionaremos algumas coisas:
 ```Python
 extends KinematicBody2D
 
-export var gravidade = 1500
-export var velocidade = 800
-export var forca_pulo = 500
-export var atrito = 0.25
-export var aceleracao = 0.1
+var gravidade = 1500
+var velocidade = 800
+var forca_pulo = 500
+var atrito = 0.25
+var aceleracao = 0.1
 
 var sprite
 var movimento = Vector2.ZERO
@@ -479,12 +478,11 @@ Agora vamos para nosso código:
 ```Python
 extends KinematicBody2D
 
-export var gravidade = 1500
-export var velocidade = 800
-export var forca_pulo = 500
-export var atrito = 0.25
-export var aceleracao = 0.1
-export var moedas = 0
+var gravidade = 1500
+var velocidade = 800
+var forca_pulo = 500
+var atrito = 0.25
+var aceleracao = 0.1
 
 var state_machine
 var sprite
@@ -539,35 +537,233 @@ func _process(delta):
 ![Godot_72](./docs/Godot_72.png)
 
 
-* **Câmera**
+### **Câmera**
+Vamos adicionar uma câmera ao nosso personagem, assim a visão da cena vai acompanha-lo.
+* Primeiro vamos adicionar em nó chamado *Camera2d* ao nosso personagem.
 ![Godot_73](./docs/Godot_73.png)
+Agora vamos alterar algumas propriedades da câmera no inspetor.
+* Marcamos a câmera como *current*, assim ela se torna nossa câmera principal.
+* Reduzimos o zoom da câmera para 0.5.
+* E na aba *Smoothing* Marcamos *Enabled* como *On*, para suavizar o movimento da câmera.
 ![Godot_74](./docs/Godot_74.png)
-![Godot_75](./docs/Godot_75.png)a
+Agora para ver nossa câmera em ação, vamos aumentar nosso mapa selecionado o *TileMap*.;;
+![Godot_75](./docs/Godot_75.png)
 
-* **Itens**
+### **Itens**
+Vamos adicionar mais um ator, vamos chamar ele de *Moeda*.
+* então faremos ele do tipo *RigidBody2D*;
 ![Godot_76](./docs/Godot_76.png)
 ![Godot_77](./docs/Godot_77.png)
+Em nossa Moeda, vamos adicionar algumas coisas:
+* Adicionaremos um 'Sprite', para nossa moeda ter uma imagem;
+* E um 'ColisionShape2D' para ela ter uma forma física;
 ![Godot_78](./docs/Godot_78.png)
+Em nossa *Sprite* adicionaremos a imagem *Coin.png* ao campo *Texture* no inspetor.
 ![Godot_79](./docs/Godot_79.png)
+E no *ColisionShaope2D* no inspetor:
+* No *Shape* adicionaremos um *New CircleShape2D*;
+* E o dimencionaremos para que ele fique do mesmo tamanho que a imagem;
 ![Godot_80](./docs/Godot_80.png)
 ![Godot_81](./docs/Godot_81.png)
+Selecionando a nossa Moeda:
+* Vamos renomear o *RigidBody2D* para *Moeda*;
+* No inspetor alteramos o *Mode* para Kinematic;
+* Ainda no inspetor alteramos o *GravityScale* para 0, assim nossa moeda vai poder flutuar;
+
 ![Godot_82](./docs/Godot_82.png)
+Ainda em nossa moeda no inspetor vamos na aba *Node*(2), vamos em Groups(3), e adicionaremos um novo grupo chamado *Moedas*, isso nos permitirá detectar as moedas.
+![Godot_85](./docs/Godot_85.png)
+Agora no código de nosso personagem:
+* Adicionaremos uma variável para acumular as moedas(1), neste caso marcaremos esta variável como *export* para que esta variável possa ser acessada externamente;
+* E adicionaremos o código para detectar o contato com as moedas(1);
+```Python
+extends KinematicBody2D
+
+var gravidade = 1500
+var velocidade = 800
+var forca_pulo = 500
+var atrito = 0.25
+var aceleracao = 0.1
+export var moedas = 0
+
+var state_machine
+var sprite
+var movimento = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	sprite = $Sprite
+	state_machine = $AnimationTree.get("parameters/playback")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+
+	movimento.y += gravidade * delta
+
+	var direcao = 0
+
+	if Input.is_action_pressed("Mover_Direita"):
+		direcao += 1
+		sprite.set_scale(Vector2(1, 1))
+	if Input.is_action_pressed("Mover_Esquerda"):
+		direcao -= 1
+		sprite.set_scale(Vector2(-1, 1))
+
+	if direcao != 0:
+		movimento.x = lerp(movimento.x, direcao * velocidade, aceleracao)
+	else:
+		movimento.x = lerp(movimento.x, 0, atrito)
+
+	movimento = move_and_slide(movimento, Vector2.UP)
+
+	var estado = "Parado"
+
+	if not is_on_floor():
+		estado = "Pulando"
+
+	if abs(movimento.x) > 50 and abs(movimento.x) <= 400:
+		estado = "Andando"
+
+	if abs(movimento.x) > 400:
+		estado = "Correndo"
+
+	if Input.is_action_just_pressed("Pular"):
+		if is_on_floor():
+			movimento.y = forca_pulo * -1
+			estado = "Pulando"
+
+	state_machine.travel(estado)
+
+    for i in get_slide_count():
+		var colisao = get_slide_collision(i)
+		if colisao.collider and "Moedas" in colisao.collider.get_groups():
+			colisao.collider.free()
+			moedas += 1
+```
 ![Godot_83](./docs/Godot_83.png)
+![Godot_86](./docs/Godot_86.png)
+Agora em nosso mapa podemos adicionar varias cópias de nossa moeda.
 ![Godot_84](./docs/Godot_84.png)
 
-* **Score**
-![Godot_85](./docs/Godot_85.png)
-![Godot_86](./docs/Godot_86.png)
+### **Score**
+Vamos agora adicionar um interface para mostrar quantas moedas foram coletadas.
+* Adicionaremos mais uma cena em nossa pasta *src*, e a chamaremos de *GUI*;
+* E ele será do tipo *Control*
 ![Godot_87](./docs/Godot_87.png)
+Agora adicionaremos os seguintes nós em nossa GUI, na seguinte ordem:
+* MarginContainer 
+    - HBoxContainer
+        - TextureRect
+        - Label (Que renomearemos para *Score*) 
+
 ![Godot_88](./docs/Godot_88.png)
 ![Godot_89](./docs/Godot_89.png)
+
+No nó *Score* alteraremos o valor de *Text* para 0, no inspetor.
 ![Godot_90](./docs/Godot_90.png)
+
+E no TextureRect adicionaremos a imagem da moeda no campo *Texture*
+
 ![Godot_91](./docs/Godot_91.png)
+
+Agora criaremos um script para nossa interface visual:
+```python
+extends Control
+
+var score
+var personagem
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	score = $MarginContainer/HBoxContainer/Score
+	personagem = $"../../Personagem"
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	score.text = str(personagem.moedas)
+```
+* Referenciaremos nosso personagem posicionado na cena;
+* Referenciaremos também nosso personagem posicionado na cena;
 ![Godot_92](./docs/Godot_92.png)
 ![Godot_93](./docs/Godot_93.png)
-![Godot_94](./docs/Godot_94.png)
+
+Agora em nossa cena principal criaremos um novo nó do tipo *CanvasLayer*
+Como filho deste novo nó adicionaremos a nossa *GUI*.
 ![Godot_95](./docs/Godot_95.png)
 ![Godot_96](./docs/Godot_96.png)
 
-* **Reset**
+### **Reset**
+Agora por fim adicionaremos uma condição para que o jogo finalize.
+* Definiremos que caso o personagem fique abaixo de um determinado ponto, no eixo *Y* o jogo reinicie.
+* Caso o valor de *Y* fique acima de 700 vamos considerar que o personagem esta fora da área de jogo então reiniciaremos o jogo(1).
+
+```python
+extends KinematicBody2D
+
+var gravidade = 1500
+var velocidade = 800
+var forca_pulo = 500
+var friccao = 0.25
+var aceleracao = 0.1
+export var moedas = 0
+
+var state_machine
+var sprite
+var movimento = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	sprite = $Sprite
+	state_machine = $AnimationTree.get("parameters/playback")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+			
+	movimento.y += gravidade * delta
+	
+	var direcao = 0
+	
+	if Input.is_action_pressed("Mover_Direita"):
+		direcao += 1
+		sprite.set_scale(Vector2(1, 1))
+	if Input.is_action_pressed("Mover_Esquerda"):
+		direcao -= 1
+		sprite.set_scale(Vector2(-1, 1))
+	
+	if direcao != 0:
+		movimento.x = lerp(movimento.x, direcao * velocidade, aceleracao)
+	else:		
+		movimento.x = lerp(movimento.x, 0, friccao)
+		
+	movimento = move_and_slide(movimento, Vector2.UP)	
+	
+	var estado = "Parado"
+	
+	if not is_on_floor():
+		estado = "Pulando"
+	
+	if abs(movimento.x) > 50 and abs(movimento.x) <= 400:
+		estado = "Andando"
+	
+	if abs(movimento.x) > 400:
+		estado = "Correndo"
+		
+	if Input.is_action_just_pressed("Pular"):
+		if is_on_floor():
+			movimento.y = forca_pulo * -1
+			estado = "Pulando"
+			
+	state_machine.travel(estado)
+	
+	for i in get_slide_count():
+		var colisao = get_slide_collision(i)
+		if colisao.collider and "Moedas" in colisao.collider.get_groups():
+			colisao.collider.free()
+			moedas += 1
+			
+	if global_position.y >= 700:
+		get_tree().reload_current_scene()
+```
 ![Godot_97](./docs/Godot_97.png)

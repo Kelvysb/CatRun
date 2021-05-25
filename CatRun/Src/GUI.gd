@@ -1,6 +1,5 @@
 extends Control
 
-
 var score
 var personagem
 
